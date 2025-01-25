@@ -5,3 +5,6 @@
 * {
     user-select: none;
 }
+html {
+    overflow-y: hidden;
+}
