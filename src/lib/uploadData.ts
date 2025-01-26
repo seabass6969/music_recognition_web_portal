@@ -29,5 +29,5 @@ export async function process_file(queue_id: string): Promise<Object>{
         method: "post",
         body: data
     })
-    return await response.text()
+    return await response.json()
 }

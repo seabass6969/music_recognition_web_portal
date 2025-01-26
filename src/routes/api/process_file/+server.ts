@@ -14,12 +14,31 @@ export const POST: RequestHandler = async ({ request }) => {
                         }, {status: 500})
                 )
             }
-            return resolve(
-                json({
-                        success: true,
-                        output: stdout
-                    }, {status: 200})
-            )
+            try{
+                const output = JSON.parse(stdout)
+                if (output["error"]){
+                    return resolve(
+                        json({
+                                success: false,
+                                output: stderr 
+                            }, {status: 500})
+                    )
+                }else{
+                    return resolve(
+                        json({
+                                success: true,
+                                output: output
+                            }, {status: 200})
+                    )
+                }
+            }catch {
+                return resolve(
+                    json({
+                            success: false,
+                            output: stderr 
+                        }, {status: 500})
+                )
+            }
         })
     })
 }

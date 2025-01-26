@@ -1,12 +1,9 @@
 <script lang="ts">
-    import NoPermission from '$lib/components/NoPermission.svelte'
-    import SongResult from '$lib/components/SongResult.svelte'
-	import '../app.css';
-	let { children } = $props();
-</script>
+	import '../../app.css';
+	import type { LayoutProps } from './$types';
 
-<NoPermission />
-<SongResult />
+	let { data, children }: LayoutProps = $props();
+</script>
 
 <div class="h-screen w-screen bg-gradient-to-tl from-cyan-200 to-zinc-200 flex flex-col">
 {@render children()}
