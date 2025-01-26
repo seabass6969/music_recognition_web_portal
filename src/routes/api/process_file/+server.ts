@@ -1,11 +1,16 @@
 import { json, RequestHandler} from '@sveltejs/kit';
+import {build} from '$lib/build.ts'
 import {exec} from 'child_process'
 
 export const POST: RequestHandler = async ({ request }) => {
     return new Promise(async (resolve, _) => {
         const formData = await request.formData()
         const queue_id = (formData.get("queue_id") as string).trim()
-        exec(`python ../music_recognition_main/main.py ${'0'} ${queue_id}`, (error, stdout, stderr) => {
+            let exec_command = `python ../music_recognition_main/main.py ${'0'} ${queue_id}`
+        if (build){
+            exec_command = `python music_recognition_main/main.py ${'0'} ${queue_id}`
+        }
+        exec(exec_command, (error, stdout, stderr) => {
             if (error) {
                 return resolve(
                     json({
