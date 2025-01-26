@@ -6,9 +6,9 @@ export const POST: RequestHandler = async ({ request }) => {
     return new Promise(async (resolve, _) => {
         const formData = await request.formData()
         const queue_id = (formData.get("queue_id") as string).trim()
-            let exec_command = `python ../music_recognition_main/main.py ${'0'} ${queue_id}`
+        let exec_command = `python ../music_recognition_main/main.py ${'0'} ${queue_id}`
         if (build){
-            exec_command = `python music_recognition_main/main.py ${'0'} ${queue_id}`
+            exec_command = `/opt/venv/bin/python music_recognition_main/main.py ${'0'} ${queue_id}`
         }
         exec(exec_command, (error, stdout, stderr) => {
             if (error) {
