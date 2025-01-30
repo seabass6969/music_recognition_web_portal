@@ -22,5 +22,28 @@
     "name": "Music Recognizer",
     "short_name": "Recognizer",
     "start_url": "/",
-    "description": "Music Recognizer"
+    "description": "Music Recognizer",
+    "screenshots": [
+      {
+        "src": "screenshots/android.png",
+        "sizes": "375x812",
+        "type": "image/png",
+        "platform": "android",
+        "label": "Home screen"
+      },
+      {
+        "src": "screenshots/ios.png",
+        "sizes": "375x812",
+        "type": "image/png",
+        "platform": "ios",
+        "label": "Home screen"
+      },
+      {
+        "src": "screenshots/dashboard.webp",
+        "sizes": "3840x2160",
+        "type": "image/png",
+        "form_factor": "wide",
+        "label": "Home screen"
+      }
+    ]
 }
