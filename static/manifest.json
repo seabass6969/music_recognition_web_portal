@@ -16,7 +16,7 @@
         }
     ],
     "orientation": "portrait",
-    "display": "minimal-ui",
+    "display": "fullscreen",
     "dir": "auto",
     "lang": "en-GB",
     "name": "Music Recognizer",
@@ -26,7 +26,7 @@
     "screenshots": [
       {
         "src": "screenshots/android.png",
-        "sizes": "375x812",
+        "sizes": "1080x2340",
         "type": "image/png",
         "platform": "android",
         "label": "Home screen"
@@ -39,7 +39,7 @@
         "label": "Home screen"
       },
       {
-        "src": "screenshots/dashboard.webp",
+        "src": "screenshots/wide.png",
         "sizes": "3840x2160",
         "type": "image/png",
         "form_factor": "wide",
