@@ -7,6 +7,7 @@ export const start_stop = writable(false)
 export const loading = writable(false)
 export const there_is_result = writable(false)
 export const error_result = writable(false)
+export const error_reason = writable<undefined | string>(undefined)
 interface ImusicResult {
 Name: string, Author: string, Stored_Location: string, License: string, Original_location: string, Genre: string
 }

@@ -1,1 +1,3 @@
-<div class=""></div>
+<div class="absolute rounded-full p-7 size-64 md:p-14 md:size-96 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 to-gray-100/100 backdrop-blur-sm border-gray-100 border animate-inflating-lg"></div>
+<div class="absolute rounded-full p-7 size-64 md:p-14 md:size-96 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 to-gray-100/100 backdrop-blur-sm border-gray-100 border animate-inflating"></div>
+<div class="absolute rounded-full p-7 size-64 md:p-14 md:size-96 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 to-gray-100/100 backdrop-blur-sm border-gray-100 border animate-inflating-sm"></div>

@@ -12,7 +12,7 @@
 </script>
 
 {#if $there_is_result}
-<div class="absolute h-screen w-screen z-10 flex justify-center items-center bg-gradient-to-b from-white/60 to-blue-600/50 backdrop-blur-lg" transition:fade>
+<div class="absolute h-screen w-screen z-30 flex justify-center items-center bg-gradient-to-b from-white/60 to-blue-600/50 backdrop-blur-lg" transition:fade>
         <div class="text-white bg-gray-900 h-5/6 w-3/4 border-black rounded-2xl p-5 md:p-10 grid auto-rows-max gap-3 shadow-2xl shadow-indigo-900" role="dialog" aria-modal="true" in:receive={{key: "loading"}} out:send={{key: "loading"}}>
             <button class="size-fit" onclick={close}><img src="/close.svg" alt=""></button>
             {#if $error_result == false}

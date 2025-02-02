@@ -3,12 +3,11 @@
     import {onMount} from 'svelte'
     import Record from '$lib/components/Record.svelte'
     import {upload_data, request_id, process_file} from '$lib/uploadData.ts'
-    import {alert_no_permission, loading, there_is_result, start_stop, first_trying_permission, song_results, error_result} from '$lib/stores.ts'
+    import {alert_no_permission, loading, there_is_result, start_stop, first_trying_permission, song_results, error_result, error_reason} from '$lib/stores.ts'
     import {loading_messages} from '$lib/loading_message.ts'
     //Inspired by https://cptcrunchy.medium.com/how-to-build-a-voice-recorder-with-sveltekit-d331e3e94af6
     let mediaRecorder: null | MediaRecorder = null
     let mediaChunk: Blob[] = []
-    let audioUrl = ""
     let id = ""
     let changing_message = $state(0)
     let elapsed = $state(0)
@@ -30,7 +29,7 @@
                 }
                 frame = requestAnimationFrame(update)
                 elapsed = time - start_time
-                if (elapsed >= (30 * 1000)){
+                if (elapsed >= (60 * 1000)){
                     cancelAnimationFrame(frame)
                     console.log("Time limit reached, automatic cut off")
                     start_time = 0
@@ -52,30 +51,35 @@
                 // console.log(id)
             }
             mediaRecorder.onstop = async () => {
-                const interval = setInterval(() => {
-                    if (changing_message >= (loading_messages.length - 1)){
-                        changing_message = 0
+                if (elapsed >= (30 * 1000)){
+                    const interval = setInterval(() => {
+                        if (changing_message >= (loading_messages.length - 1)){
+                            changing_message = 0
+                        }else{
+                            changing_message += 1
+                        }
+                    }, 2000)
+                    const blob = new Blob(mediaChunk, {type: 'audio/wav' })
+                    mediaChunk = []
+                    loading.set(true)
+                    await upload_data(blob, id)
+                    const song_result = await process_file(id)
+                    console.log(song_result)
+                    if(song_result["success"] == true){
+                        song_results.set(song_result["output"])
+                        error_result.set(false)
                     }else{
-                        changing_message += 1
+                        error_result.set(true)
+                        error_reason.set("No results")
                     }
-                }, 2000)
-                const blob = new Blob(mediaChunk, {type: 'audio/wav' })
-                mediaChunk = []
-                audioUrl = window.URL.createObjectURL(blob)
-                loading.set(true)
-                await upload_data(blob, id)
-                const song_result = await process_file(id)
-                console.log(song_result)
-                if(song_result["success"] == true){
-                    song_results.set(song_result["output"])
-                    error_result.set(false)
-                }else{
+                    console.log($song_results)
+                    loading.set(false)
+                    clearInterval(interval)
+                    there_is_result.set(true)
+                } else {
                     error_result.set(true)
+                    error_reason.set("Not enough time")
                 }
-                console.log($song_results)
-                loading.set(false)
-                clearInterval(interval)
-                there_is_result.set(true)
             }
         } catch {
             first_trying_permission.set(false)
@@ -87,18 +91,18 @@
         <div class="h-20 flex justify-center">
             {#if $alert_no_permission == false}
                 {#if $start_stop == true && $loading == false}
-                    <div class="animate-pulse text-red-800 flex flex-row font-semibold items-center gap-3">
+                    <div class="animate-pulse text-red-800 flex flex-row font-semibold items-center gap-3 z-10">
                         <img src="/microphone.svg" alt=""> 
                         <div>Recording Currently</div>
                     </div>
 
                 {:else if $start_stop == false && $loading == false}
-                    <div class="text-indigo-800 flex flex-row font-semibold items-center gap-3">
+                    <div class="text-indigo-800 flex flex-row font-semibold items-center gap-3 z-10">
                         <img src="/mute.svg" alt=""> 
                         <div>Press Below to start</div>
                     </div>
                 {:else if $loading == true}
-                    <div class="text-indigo-800 flex flex-row font-semibold items-center gap-3">
+                    <div class="text-indigo-800 flex flex-row font-semibold items-center gap-3 z-10">
                         <img src="/loading_blue.svg" alt="" class="animate-spin"> 
                         {#each loading_messages as message, index}
                             {#if changing_message == index}
