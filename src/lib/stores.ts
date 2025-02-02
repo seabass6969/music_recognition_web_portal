@@ -11,4 +11,4 @@ export const error_reason = writable<undefined | string>(undefined)
 interface ImusicResult {
 Name: string, Author: string, Stored_Location: string, License: string, Original_location: string, Genre: string
 }
-export const song_results = writable<ImusicResult>()
+export const song_results = writable<ImusicResult | undefined>()

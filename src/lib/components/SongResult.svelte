@@ -1,5 +1,5 @@
 <script>
-    import {there_is_result, error_result, start_stop, loading, song_results} from '$lib/stores.ts'
+    import {there_is_result, error_result, error_reason, start_stop, loading, song_results} from '$lib/stores.ts'
     import {send, receive} from '$lib/animation.ts'
     import {fade} from 'svelte/transition'
     function close(){
@@ -7,7 +7,9 @@
         error_result.set(false)
         start_stop.set(false)
         loading.set(false)
-        song_results.set()
+        song_results.set(undefined)
+        error_reason.set(undefined)
+        
     }
 </script>
 
@@ -30,9 +32,15 @@
                     <div class="font-bold md:text-lg text-sm overflow-ellipsis w-auto max-w-[50vw]">{$song_results["License"]}</div>
                 </div>
             {:else}
+                {#if $error_reason == "too short"}
+                <div class="flex gap-1">
+                    <img src="/error.svg" alt=""><div class="font-bold">Sorry, we unable recognise this song, because the duration is too short. </div>
+                </div>
+                {:else}
                 <div class="flex gap-1">
                     <img src="/error.svg" alt=""><div class="font-bold">Sorry, we unable recognise this song, or this song is not inside our database.</div>
                 </div>
+                {/if}
             {/if}
         </div>
 </div>

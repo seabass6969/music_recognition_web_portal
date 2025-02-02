@@ -3,7 +3,9 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit'
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [sveltekit(), SvelteKitPWA()],
+	plugins: [sveltekit(), SvelteKitPWA( {
+  registerType: 'autoUpdate' }
+    )],
 	define: {
 		'process.env.NODE_ENV': '"production"'
 	}

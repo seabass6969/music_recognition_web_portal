@@ -29,7 +29,7 @@
                 }
                 frame = requestAnimationFrame(update)
                 elapsed = time - start_time
-                if (elapsed >= (60 * 1000)){
+                if (elapsed >= (30 * 1000)){
                     cancelAnimationFrame(frame)
                     console.log("Time limit reached, automatic cut off")
                     start_time = 0
@@ -51,7 +51,7 @@
                 // console.log(id)
             }
             mediaRecorder.onstop = async () => {
-                if (elapsed >= (30 * 1000)){
+                if (elapsed >= (15 * 1000)){
                     const interval = setInterval(() => {
                         if (changing_message >= (loading_messages.length - 1)){
                             changing_message = 0
@@ -77,8 +77,10 @@
                     clearInterval(interval)
                     there_is_result.set(true)
                 } else {
+                    loading.set(false)
                     error_result.set(true)
-                    error_reason.set("Not enough time")
+                    error_reason.set("too short")
+                    there_is_result.set(true)
                 }
             }
         } catch {
