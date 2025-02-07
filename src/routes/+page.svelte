@@ -51,7 +51,7 @@
                 // console.log(id)
             }
             mediaRecorder.onstop = async () => {
-                if (elapsed >= (15 * 1000)){
+                if (elapsed >= (5 * 1000)){
                     const interval = setInterval(() => {
                         if (changing_message >= (loading_messages.length - 1)){
                             changing_message = 0
